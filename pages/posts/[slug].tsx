@@ -91,17 +91,11 @@ export default function Post(props) {
           title,
           description: metaDescription,
           path: relativeUrl,
-          image: `${baseUrl}/api/og?title=${encodeURIComponent(title)}${
-            currentCover
-              ? `&bg=${encodeURI(
-                  currentCover.startsWith('http://') || currentCover.startsWith('https://')
-                    ? new URL(currentCover).pathname.split("/").slice(2).join("/")
-                    : currentCover.startsWith('/')
-                    ? currentCover.slice(1)
-                    : currentCover
-                )}`
-              : ""
-          }`,
+          image: (coverLight || coverDark || coverUrl)
+            ? (((coverLight || coverDark || coverUrl).startsWith('http://') || (coverLight || coverDark || coverUrl).startsWith('https://'))
+                ? (coverLight || coverDark || coverUrl)
+                : `${baseUrl}${(coverLight || coverDark || coverUrl).startsWith('/') ? (coverLight || coverDark || coverUrl) : `/${coverLight || coverDark || coverUrl}`}`)
+            : `${baseUrl}/social.png`,
         }}
       />
       <Main>

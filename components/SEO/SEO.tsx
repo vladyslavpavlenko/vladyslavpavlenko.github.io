@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { DefaultSeo } from "next-seo";
 
-export const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://vladyslavpavlenko.github.io";
+export const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://pvlnk.xyz";
 
 export const defaultSEO = {
   title: "Vladyslav Pavlenko",
