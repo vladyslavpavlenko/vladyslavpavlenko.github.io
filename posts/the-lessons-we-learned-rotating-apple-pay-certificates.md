@@ -1,7 +1,7 @@
 ---
 title: "The Lessons We Learned Rotating Apple Pay Certificates"
 slug: "the-lessons-we-learned-rotating-apple-pay-certificates"
-publishedDate: "2025-11-04T20:00:00.000+02:00"
+publishedDate: "2025-12-09T20:00:00.000+02:00"
 coverLight: "/posts/the-lessons-we-learned-rotating-apple-pay-certificates/cover-light.png"
 coverDark: "/posts/the-lessons-we-learned-rotating-apple-pay-certificates/cover-dark.png"
 coverAlt: null
