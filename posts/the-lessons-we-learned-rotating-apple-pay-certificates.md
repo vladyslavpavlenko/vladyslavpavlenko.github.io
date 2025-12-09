@@ -141,7 +141,7 @@ func (t *Transport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 ```
 
-If you noticed a potential place for improvement – feel free to contribute. Here's how my [dynamictls](github.com/vladyslavpavlenko/dynamictls) package can be used:
+If you noticed a potential place for improvement – feel free to contribute. Here's how my [dynamictls](https://github.com/vladyslavpavlenko/dynamictls) package can be used:
 
 ```go title="example.go" showLineNumbers
 import (
