@@ -177,7 +177,7 @@ client := &http.Client{
 resp, err := client.Get("https://example.com")
 ```
 
-In theory, everything looked reliable. The problem was that I hadn't done end-to-end testing of the rotation process and, as a result, instead of a TLS handshake failure, Apple responded with an HTTP error page that completely bypassed the dynamic TLS fallback:
+In hindsight, the real problem was that I built the whole approach on an unchecked assumption: I expected Apple to fail at the TLS handshake level when the certificate became invalid. Instead, Apple returned an HTTP 400 error page, which completely bypassed my dynamic TLS fallback.
 
 ```html title="response.html" showLineNumbers
 HTTP/1.1 400 Bad Request
@@ -196,7 +196,7 @@ HTTP/1.1 400 Bad Request
 </html>
 ```
 
-Since this behavior wasn't documented, there was no way to predict it.
+This behaviour wasn't documented, but it was still testable – I simply never tried calling Apple with an invalid/expired certificate in a realistic environment.
 
 ![what-went-wrong-meme.png](/posts/the-lessons-we-learned-rotating-apple-pay-certificates/what-went-wrong-meme.png)
 
@@ -207,13 +207,13 @@ The certificate went invalid at a random point during its expiration day. Needle
 The only takeaway I had afterward – logic is not always something you can rely on; you have to test how things actually behave.
 
 # Takeaways
-I originally wanted this to be a pure success story. In fact, I’m rewriting this article now, because I started working on it before the incident with the Merchant Identity certificate. Basically, this turned into a half-success, half-fuckup story – but with a lot of useful insights to share.
+I originally wanted this to be a pure success story and even started writing it before the incident. What was supposed to be a resounding victory turned out to be a production fuckup – caused by building a clever system on top of an unverified assumption. That's exactly where the most useful insights came from.
 
-When it comes to what I learned from this journey, I'd definitely highlight these points:
+When it comes to what I learned from all this, I'd definitely highlight these points:
 
-- Conduct a complete testing of your system. Even when everything seems logical, it's not ultimately the case.
-- Always validate hashes to be 100% sure your certificates are properly generated.
-- Your old Payment Processing Certificate will disappear the second you activated the new one.
-- Make sure to add metrics to track the switching process. This will save you from uncertainty during the rotation process.
+- **Don't ever build your systems on heuristics.** If you do, at least conduct a complete and thorough testing.
+- Make sure you support different certificates per environment, so the rotation process can be tested beforehand.
+- Instrument the rotation itself. Track success/error rates per certificate, add alerts around expiry windows, and make the switching behaviour trackable on dashboards.
+- Have a simple, documented rotation playbook. A step-by-step checklist that anyone on call can follow easily.
 
-Hope my insights were helpful!
+Thanks for reading. If this article helps you dodge a similar outage, it was worth writing.
