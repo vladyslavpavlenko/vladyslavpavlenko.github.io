@@ -12,7 +12,7 @@ export default function Resume() {
         </h3>
       </dt>
         <dd className="list-content">
-            <div>Junior Go Engineer</div>
+            <div>Go Engineer</div>
             <div>
                 <LinkExternal href="//solidgate.com">Solidgate</LinkExternal>
             </div>
